@@ -1,128 +1,193 @@
-# Restoran Otomasyonu
+<div align="center">
 
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet)
-![WPF](https://img.shields.io/badge/WPF-Desktop-0078D4?style=flat-square&logo=windows)
-![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=flat-square&logo=sqlite)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+# 🍽️ Restoran Otomasyonu
 
-Modern ve kullanıcı dostu restoran yönetim sistemi. WPF ve .NET 8 ile geliştirilmiştir.
+### Modern Restoran Yönetim Sistemi
 
-![Screenshot](docs/screenshot.png)
+[![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![WPF](https://img.shields.io/badge/WPF-Desktop-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
+[![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-## ✨ Özellikler
+<br/>
 
-- 🍽️ **Masa Yönetimi** - Masa durumları, bölüm bazlı görüntüleme
-- 📝 **Sipariş Takibi** - Kolay sipariş alma ve düzenleme
-- 🥡 **Gel-Al & Paket** - Masa dışı sipariş desteği
-- ⚖️ **Yarım Porsiyon** - Esnek porsiyon seçenekleri
-- 💰 **Anlık Fiyat Değiştirme** - Sipariş bazlı fiyat düzenleme
-- 📊 **Toplu Fiyat Güncelleme** - Yüzdelik zam/indirim
-- ⭐ **Favori Ürünler** - Hızlı erişim
-- 🎁 **İkram Yönetimi** - İkram nedeni takibi
-- 🧾 **Fiş Yazdırma** - Müşteri ve mutfak fişleri
-- 📈 **Raporlar** - Günlük/aylık satış analizleri
-- 👥 **Kullanıcı Yönetimi** - Admin ve Garson rolleri
-- 🔄 **Sıfırlama Seçenekleri** - Veritabanı yönetimi
+**Restoranınızı kolayca yönetin!**  
+Masa takibi • Sipariş yönetimi • Raporlama • Fiş yazdırma
 
-## 🚀 Kurulum
+<br/>
 
-### İndirip Kullanma (Önerilen)
+[📥 **İNDİR**](../../releases/latest) &nbsp;&nbsp;•&nbsp;&nbsp; [📖 Dokümantasyon](#-kurulum) &nbsp;&nbsp;•&nbsp;&nbsp; [🐛 Hata Bildir](../../issues)
 
-1. [Releases](../../releases) sayfasından son sürümü indirin
-2. ZIP dosyasını çıkarın
-3. `RestoranOtomasyon.exe` çalıştırın
-4. Varsayılan PIN: `1234`
+---
 
-> ⚠️ .NET kurulumu gerekmez - Self-contained package
+</div>
+
+<br/>
+
+## ⚡ Hızlı Başlangıç
+
+```bash
+1. Releases sayfasından ZIP indir
+2. Çıkar ve RestoranOtomasyon.exe çalıştır
+3. PIN: 1234 ile giriş yap
+```
+
+> 💡 **.NET kurulumu gerekmez** - Uygulama tüm bağımlılıkları içerir!
+
+<br/>
+
+## 🎯 Özellikler
+
+<table>
+<tr>
+<td width="50%">
+
+### 🍽️ Sipariş Yönetimi
+- ✅ Masa bazlı sipariş takibi
+- ✅ Gel-Al & Paket sipariş desteği
+- ✅ Yarım porsiyon seçeneği
+- ✅ Anlık fiyat değiştirme
+- ✅ İkram yönetimi
+
+</td>
+<td width="50%">
+
+### 📊 Yönetim & Raporlama
+- ✅ Günlük/aylık satış raporları
+- ✅ Toplu fiyat güncelleme (zam/indirim)
+- ✅ Kategori ve ürün yönetimi
+- ✅ Kullanıcı rolleri (Admin/Garson)
+- ✅ Fiş yazdırma
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+## 🖥️ Ekran Görüntüleri
+
+<div align="center">
+<table>
+<tr>
+<td align="center"><b>🏠 Masa Ekranı</b></td>
+<td align="center"><b>📝 Sipariş Ekranı</b></td>
+</tr>
+<tr>
+<td><img src="docs/masalar.png" width="400"/></td>
+<td><img src="docs/siparis.png" width="400"/></td>
+</tr>
+</table>
+</div>
+
+<br/>
+
+## 📥 Kurulum
+
+### Hazır Paket (Önerilen)
+
+| Adım | Açıklama |
+|:----:|----------|
+| 1️⃣ | [**Releases**](../../releases/latest) sayfasından ZIP indir |
+| 2️⃣ | İstediğin klasöre çıkar |
+| 3️⃣ | `RestoranOtomasyon.exe` çalıştır |
+| 4️⃣ | PIN: `1234` ile giriş yap |
 
 ### Kaynak Koddan Derleme
 
 ```bash
 # Klonla
-git clone https://github.com/KULLANICI_ADI/restoran-otomasyon.git
-cd restoran-otomasyon
+git clone https://github.com/ec4tes/restoran-otomasyon.git
 
-# Derle ve çalıştır
-cd RestoranOtomasyon/src/RestoranOtomasyon
+# Çalıştır
+cd restoran-otomasyon/src/RestoranOtomasyon
 dotnet run
 
-# Release için publish
+# Release build
 dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
-## 📋 Sistem Gereksinimleri
+<br/>
 
-- Windows 10/11 (64-bit)
-- 4GB RAM
-- 200MB disk alanı
+## 🔧 Sistem Gereksinimleri
+
+| Gereksinim | Minimum |
+|------------|---------|
+| 💻 İşletim Sistemi | Windows 10/11 (64-bit) |
+| 🧠 RAM | 4 GB |
+| 💾 Disk | 200 MB |
+| ⚙️ .NET | Gerekmez (Self-contained) |
+
+<br/>
 
 ## 🛠️ Teknolojiler
 
-- **.NET 8** - Framework
-- **WPF** - UI Framework
-- **SQLite** - Veritabanı
-- **Dapper** - Micro ORM
-- **CommunityToolkit.Mvvm** - MVVM Pattern
-- **Serilog** - Logging
+<div align="center">
+
+| Teknoloji | Kullanım |
+|:---------:|:--------:|
+| ![.NET](https://img.shields.io/badge/.NET_8-512BD4?style=flat-square&logo=dotnet&logoColor=white) | Framework |
+| ![WPF](https://img.shields.io/badge/WPF-0078D4?style=flat-square&logo=windows&logoColor=white) | UI Framework |
+| ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white) | Veritabanı |
+| ![C#](https://img.shields.io/badge/C%23-239120?style=flat-square&logo=csharp&logoColor=white) | Programlama Dili |
+
+</div>
+
+<br/>
 
 ## 📁 Proje Yapısı
 
 ```
-RestoranOtomasyon/
-├── src/
-│   └── RestoranOtomasyon/
-│       ├── Data/           # Veritabanı işlemleri
-│       ├── Models/         # Entity sınıfları
-│       ├── Services/       # İş mantığı
-│       ├── ViewModels/     # MVVM ViewModels
-│       ├── Views/          # XAML UI
-│       ├── Converters/     # Value Converters
-│       └── Infrastructure/ # Altyapı kodları
-└── docs/                   # Dokümantasyon
+📦 restoran-otomasyon
+├── 📂 src/RestoranOtomasyon
+│   ├── 📂 Data/           # Veritabanı işlemleri
+│   ├── 📂 Models/         # Entity sınıfları
+│   ├── 📂 Services/       # İş mantığı katmanı
+│   ├── 📂 ViewModels/     # MVVM ViewModels
+│   ├── 📂 Views/          # XAML arayüzleri
+│   └── 📂 Converters/     # Value Converters
+├── 📄 README.md
+└── 📄 LICENSE
 ```
 
-## 🎨 Ekran Görüntüleri
-
-<details>
-<summary>Masa Ekranı</summary>
-
-![Masa Ekranı](docs/masalar.png)
-</details>
-
-<details>
-<summary>Sipariş Ekranı</summary>
-
-![Sipariş Ekranı](docs/siparis.png)
-</details>
-
-<details>
-<summary>Yönetim Paneli</summary>
-
-![Yönetim Paneli](docs/yonetim.png)
-</details>
+<br/>
 
 ## 🔐 Varsayılan Giriş
 
-| Rol | PIN |
-|-----|-----|
-| Admin | 1234 |
+<div align="center">
+
+| 👤 Rol | 🔑 PIN |
+|:------:|:------:|
+| Admin | `1234` |
+
+</div>
+
+<br/>
 
 ## 🤝 Katkıda Bulunma
 
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/YeniOzellik`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Yeni özellik eklendi'`)
-4. Branch'i push edin (`git push origin feature/YeniOzellik`)
-5. Pull Request açın
+Katkılarınızı bekliyoruz! 
+
+1. 🍴 Fork yapın
+2. 🌿 Feature branch oluşturun (`git checkout -b feature/YeniOzellik`)
+3. 💾 Commit edin (`git commit -m 'Yeni özellik eklendi'`)
+4. 📤 Push edin (`git push origin feature/YeniOzellik`)
+5. 🔃 Pull Request açın
+
+<br/>
 
 ## 📄 Lisans
 
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+Bu proje **MIT** lisansı altındadır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
-## 👨‍💻 Geliştirici
-
-**CEMİLBEY Yazılım**
+<br/>
 
 ---
 
-⭐ Projeyi beğendiyseniz yıldız vermeyi unutmayın!
+<div align="center">
+
+**[ec4tes](https://github.com/ec4tes)** tarafından ❤️ ile geliştirildi
+
+⭐ Beğendiysen yıldız vermeyi unutma!
+
+</div>
