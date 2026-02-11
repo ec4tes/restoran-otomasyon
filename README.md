@@ -190,6 +190,7 @@ Gelecekte eklenmesi planlanan özellikler:
 
 | Durum | Özellik | Açıklama |
 |:-----:|---------|----------|
+| 🔲 | **🤖 AI İş Asistanı** | Satış verilerini analiz eden, ekonomik önerilerde bulunan yapay zeka |
 | 🔲 | Stok Takibi | Malzeme stok yönetimi ve uyarı sistemi |
 | 🔲 | Mutfak Ekranı | Siparişlerin mutfakta görüntülenmesi |
 | 🔲 | QR Menü | Müşterilerin telefondan menü görüntülemesi |
@@ -201,7 +202,7 @@ Gelecekte eklenmesi planlanan özellikler:
 
 <br/>
 
-## �📄 Lisans
+## 📄 Lisans
 
 Bu proje **MIT** lisansı altındadır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
