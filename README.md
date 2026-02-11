@@ -24,6 +24,14 @@ Masa takibi • Sipariş yönetimi • Raporlama • Fiş yazdırma
 
 <br/>
 
+## 💡 Neden Bu Proje?
+
+Bu projeyi **ailemizin restoranı** için geliştirdim. Babam uzun yıllar Excel tablolarıyla sipariş takibi yapmaya çalıştı, ancak sürekli hatalar ve karışıklıklar yaşanıyordu. Eski sistemler ise ya çok karmaşık ya da ihtiyaçlarımıza uymuyordu.
+
+Amacım **basit, hızlı ve güvenilir** bir sistem oluşturmaktı. Garsonların kolayca kullanabileceği, hata payını minimize eden ve günlük işleyişi hızlandıran bir çözüm. Bu proje o ihtiyaçtan doğdu ve ailemizin restoranında aktif olarak kullanılıyor.
+
+<br/>
+
 ## ⚡ Hızlı Başlangıç
 
 ```bash
@@ -176,7 +184,24 @@ Katkılarınızı bekliyoruz!
 
 <br/>
 
-## 📄 Lisans
+## � Yol Haritası (Roadmap)
+
+Gelecekte eklenmesi planlanan özellikler:
+
+| Durum | Özellik | Açıklama |
+|:-----:|---------|----------|
+| 🔲 | Stok Takibi | Malzeme stok yönetimi ve uyarı sistemi |
+| 🔲 | Mutfak Ekranı | Siparişlerin mutfakta görüntülenmesi |
+| 🔲 | QR Menü | Müşterilerin telefondan menü görüntülemesi |
+| 🔲 | Online Yedekleme | Bulut yedekleme desteği |
+| 🔲 | Çoklu Şube | Birden fazla restoran yönetimi |
+| 🔲 | Mobil Uygulama | Android/iOS garson uygulaması |
+
+> 💬 Önerileriniz için [Issues](../../issues) sayfasından iletişime geçebilirsiniz!
+
+<br/>
+
+## �📄 Lisans
 
 Bu proje **MIT** lisansı altındadır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
