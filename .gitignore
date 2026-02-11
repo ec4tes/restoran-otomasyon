@@ -1,0 +1,79 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# Build
+*.dll
+*.exe
+*.pdb
+*.msi
+*.msm
+*.msp
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResults/
+coverage*.xml
+coverage*.json
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Publish
+publish/
+
+# User secrets
+secrets.json
+
+# Environment
+.env
+.env.local

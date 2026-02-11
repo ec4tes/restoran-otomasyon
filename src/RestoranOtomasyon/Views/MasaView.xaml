@@ -1,0 +1,355 @@
+<UserControl x:Class="RestoranOtomasyon.Views.MasaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:RestoranOtomasyon.ViewModels"
+             xmlns:models="clr-namespace:RestoranOtomasyon.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1200"
+             Background="#1a1a2e">
+    
+    <UserControl.Resources>
+        <!-- Masa Butonu Stili -->
+        <Style x:Key="MasaButton" TargetType="Button">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="12"
+                                BorderThickness="3"
+                                BorderBrush="Transparent">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="2" BlurRadius="8" Opacity="0.3"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Bölüm Tab Butonu -->
+        <Style x:Key="TabButton" TargetType="RadioButton">
+            <Setter Property="Background" Value="#16213e"/>
+            <Setter Property="Foreground" Value="#a0a0a0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="30,15"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="8,8,0,0"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0f3460"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1a4a7a"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Hızlı İşlem Butonu -->
+        <Style x:Key="QuickActionButton" TargetType="Button">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="120"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="15"
+                                BorderThickness="2"
+                                BorderBrush="Transparent">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="3" BlurRadius="10" Opacity="0.4"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="220"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Üst Bilgi Paneli -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#16213e" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Başlık -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="🪑" FontSize="28" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="Masa Durumu" FontSize="24" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- İstatistikler -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Border Background="#27ae60" CornerRadius="8" Padding="15,8" Margin="5,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🟢" FontSize="16" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{Binding BosMasaSayisi}" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text=" Boş" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#e74c3c" CornerRadius="8" Padding="15,8" Margin="5,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔴" FontSize="16" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{Binding DoluMasaSayisi}" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text=" Dolu" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#f39c12" CornerRadius="8" Padding="15,8" Margin="5,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🟡" FontSize="16" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{Binding HesapBekleyenSayisi}" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text=" Hesap" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Bölüm Tab'ları -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="20,15,20,0">
+            <RadioButton Content="🏠 İç Mekan" Style="{StaticResource TabButton}" IsChecked="True" GroupName="Bolum"
+                         Command="{Binding SelectBolumCommand}" CommandParameter="{x:Static models:MasaBolum.Iceri}"/>
+            <RadioButton Content="☀️ Dış Mekan" Style="{StaticResource TabButton}" GroupName="Bolum"
+                         Command="{Binding SelectBolumCommand}" CommandParameter="{x:Static models:MasaBolum.Disari}"/>
+        </StackPanel>
+
+        <!-- Masa Grid'i -->
+        <Border Grid.Row="2" Grid.Column="0" Background="#0f3460" CornerRadius="0,15,0,0" Margin="20,0,0,20">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+                <StackPanel>
+                    <!-- Yeni Gel-Al / Paket Butonları ve Aktif Siparişler -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                        <!-- Yeni Gel-Al Butonu -->
+                        <Button Width="130" Height="100" Margin="0,0,15,0"
+                                Background="#9b59b6" BorderBrush="#8e44ad" BorderThickness="2"
+                                Command="{Binding GelAlSecCommand}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="12">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="➕🛍️" FontSize="28" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Yeni Gel-Al" FontSize="13" FontWeight="Bold" 
+                                           Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        
+                        <!-- Yeni Paket Butonu -->
+                        <Button Width="130" Height="100" Margin="0,0,15,0"
+                                Background="#3498db" BorderBrush="#2980b9" BorderThickness="2"
+                                Command="{Binding PaketSecCommand}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="12">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="➕📦" FontSize="28" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Yeni Paket" FontSize="13" FontWeight="Bold" 
+                                           Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        
+                        <!-- Aktif Gel-Al / Paket Siparişleri -->
+                        <ItemsControl ItemsSource="{Binding AktifGelAlPaketler}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Width="130" Height="100" Margin="0,0,15,0"
+                                            Background="{Binding BackgroundColor}"
+                                            BorderBrush="#e74c3c" BorderThickness="3"
+                                            Command="{Binding DataContext.OpenAktifSiparisCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" 
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="12">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="{Binding StatusIcon}" FontSize="24" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding DisplayName}" FontSize="12" FontWeight="Bold" 
+                                                       Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                            <TextBlock Text="{Binding TutarText}" FontSize="11" 
+                                                       Foreground="#2ecc71" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding SaatText}" FontSize="10" 
+                                                       Foreground="#bdc3c7" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    
+                    <!-- Masalar -->
+                    <ItemsControl x:Name="MasaGrid" ItemsSource="{Binding CurrentMasalar}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource MasaButton}" 
+                                        Background="{Binding BackgroundColor}"
+                                        Command="{Binding DataContext.SelectMasaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding StatusIcon}" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding DisplayName}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Masa.Kapasite, StringFormat={}{0} Kişilik}" 
+                                               FontSize="11" Foreground="#cccccc" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Sağ Panel - Hızlı İşlemler -->
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Background="#16213e" CornerRadius="15,0,0,15" Margin="10,15,20,20">
+            <StackPanel Margin="10">
+                <TextBlock Text="Hızlı İşlemler" FontSize="18" FontWeight="Bold" Foreground="White" 
+                           HorizontalAlignment="Center" Margin="0,10,0,20"/>
+
+                <!-- Gel-Al -->
+                <Button Style="{StaticResource QuickActionButton}" Background="#9b59b6"
+                        Command="{Binding GelAlSecCommand}">
+                    <StackPanel>
+                        <TextBlock Text="🛍️" FontSize="36" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Gel-Al" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Paket -->
+                <Button Style="{StaticResource QuickActionButton}" Background="#3498db"
+                        Command="{Binding PaketSecCommand}">
+                    <StackPanel>
+                        <TextBlock Text="📦" FontSize="36" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Paket Sipariş" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Yenile -->
+                <Button Style="{StaticResource QuickActionButton}" Background="#1abc9c"
+                        Command="{Binding LoadMasalarCommand}">
+                    <StackPanel>
+                        <TextBlock Text="🔄" FontSize="36" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Yenile" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Renk Açıklaması -->
+                <Border Background="#0f3460" CornerRadius="10" Padding="15" Margin="0,30,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Renk Kodları" FontSize="14" FontWeight="Bold" Foreground="White" 
+                                   HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Ellipse Width="16" Height="16" Fill="#27ae60"/>
+                            <TextBlock Text="Boş" Foreground="#a0a0a0" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Ellipse Width="16" Height="16" Fill="#e74c3c"/>
+                            <TextBlock Text="Dolu" Foreground="#a0a0a0" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Ellipse Width="16" Height="16" Fill="#f39c12"/>
+                            <TextBlock Text="Hesap Bekliyor" Foreground="#a0a0a0" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

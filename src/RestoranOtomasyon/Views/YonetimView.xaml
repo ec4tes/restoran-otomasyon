@@ -1,0 +1,120 @@
+<UserControl x:Class="RestoranOtomasyon.Views.YonetimView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Background="#1e1e2e">
+    
+    <UserControl.Resources>
+        <Style x:Key="TabButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#45475a"/>
+            <Setter Property="Foreground" Value="#cdd6f4"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="25,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#585b70"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#313244" Padding="20,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0" 
+                        Command="{Binding GoBackCommand}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="←" FontSize="20" Foreground="#cdd6f4" Margin="0,0,8,0"/>
+                        <TextBlock Text="Geri" FontSize="14" Foreground="#cdd6f4" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                
+                <TextBlock Grid.Column="1" 
+                           Text="⚙️ Yönetim Paneli" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#cdd6f4"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        
+        <!-- Tab Buttons -->
+        <Border Grid.Row="1" Background="#181825" Padding="20,12">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="📁 Kategoriler" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="Kategoriler"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+                <Button Content="🍕 Ürünler" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="Urunler"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+                <Button Content="👥 Kullanıcılar" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="Kullanicilar"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+                <Button Content="🪑 Masalar" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="Masalar"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+                <Button Content="📊 Raporlar" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="Raporlar"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+                <Button Content="💰 Fiyat Güncelle" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="FiyatGuncelleme"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+                <Button Content="�🔄 Sıfırlama" 
+                        Command="{Binding SelectTabCommand}" 
+                        CommandParameter="Sifirlama"
+                        Margin="5"
+                        Style="{StaticResource TabButtonStyle}"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Content Area -->
+        <ContentControl Grid.Row="2" x:Name="ContentArea"/>
+    </Grid>
+</UserControl>

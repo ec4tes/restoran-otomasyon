@@ -1,0 +1,763 @@
+<UserControl x:Class="RestoranOtomasyon.Views.SiparisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:RestoranOtomasyon.ViewModels"
+             xmlns:local="clr-namespace:RestoranOtomasyon.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1280"
+             d:DataContext="{d:DesignInstance vm:SiparisViewModel}"
+             Background="#1A1A2E">
+    
+    <UserControl.Resources>
+        <!-- Kategori Button Style -->
+        <Style x:Key="KategoriButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2D2D44"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3D3D5C"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF6B35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Ürün Button Style -->
+        <Style x:Key="UrunButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Height" Value="140"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.4" Color="#000000"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="16">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#3D3D5C" Offset="0"/>
+                                    <GradientStop Color="#2D2D44" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#5D5D7C" Offset="0"/>
+                                    <GradientStop Color="#3D3D5C" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Border.BorderThickness>
+                                <Thickness>1.5</Thickness>
+                            </Border.BorderThickness>
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#4D4D6C" Offset="0"/>
+                                            <GradientStop Color="#3D3D54" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF6B35"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="20" ShadowDepth="5" Opacity="0.5" Color="#FF6B35"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF6B35"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF8B55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Mini Button Style (Adet +/-) -->
+        <Style x:Key="MiniButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Background" Value="#3D3D5C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF6B35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Action Button Style -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF8555"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#E55A25"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Hazır Not Button Style -->
+        <Style x:Key="HazirNotButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2D2D44"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF6B35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Boolean to Visibility Converter -->
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="380"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Sol Panel: Kategoriler -->
+        <Border Grid.Column="0" Background="#16162A" Padding="10">
+            <DockPanel>
+                <!-- Favori Butonu -->
+                <Button DockPanel.Dock="Top" 
+                        Style="{StaticResource KategoriButtonStyle}"
+                        Background="#FFD700"
+                        Foreground="#1A1A2E"
+                        Command="{Binding LoadFavorilerCommand}"
+                        Margin="0,0,0,15">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="⭐" FontSize="16" Margin="0,0,8,0"/>
+                        <TextBlock Text="Favoriler"/>
+                    </StackPanel>
+                </Button>
+                
+                <!-- Kategori Listesi -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Kategoriler}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource KategoriButtonStyle}"
+                                        Content="{Binding Ad}"
+                                        Command="{Binding DataContext.SelectKategoriCommand, 
+                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+        
+        <!-- Orta Panel: Ürünler -->
+        <Border Grid.Column="1" Padding="15">
+            <DockPanel>
+                <!-- Başlık -->
+                <TextBlock DockPanel.Dock="Top" 
+                           Text="{Binding SelectedKategori.Ad, FallbackValue='Ürünler'}"
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="White"
+                           Margin="0,0,0,15"/>
+                
+                <!-- Ürün Grid -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Urunler}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource UrunButtonStyle}"
+                                        Command="{Binding DataContext.AddUrunCommand, 
+                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                    <Grid Margin="12">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- Favori Badge -->
+                                        <Border Grid.Row="0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Top"
+                                                Margin="-5,-5,0,0"
+                                                Visibility="{Binding IsFavori, Converter={StaticResource BoolToVis}}">
+                                            <Border Background="#FFD700" CornerRadius="12" Padding="6,3">
+                                                <TextBlock Text="⭐" FontSize="12"/>
+                                            </Border>
+                                        </Border>
+                                        
+                                        <!-- Ürün Adı -->
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{Binding DisplayName}"
+                                                   FontSize="15"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E8E8E8"
+                                                   TextWrapping="Wrap"
+                                                   TextAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   LineHeight="20"/>
+                                        
+                                        <!-- Fiyat Box -->
+                                        <Border Grid.Row="2" 
+                                                Background="#1A1A2E" 
+                                                CornerRadius="8" 
+                                                Padding="10,6"
+                                                Margin="-4,8,-4,-4">
+                                            <TextBlock Text="{Binding FiyatText}"
+                                                       FontSize="17"
+                                                       FontWeight="Bold"
+                                                       Foreground="#FF6B35"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+        
+        <!-- Sağ Panel: Sipariş Listesi -->
+        <Border Grid.Column="2" Background="#16162A">
+            <DockPanel>
+                <!-- Başlık -->
+                <Border DockPanel.Dock="Top" Background="#FF6B35" Padding="15">
+                    <TextBlock Text="{Binding MasaBaslik}"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"/>
+                </Border>
+                
+                <!-- Alt Butonlar ve Toplam -->
+                <Border DockPanel.Dock="Bottom" Padding="10">
+                    <StackPanel>
+                        <!-- Toplam -->
+                        <Border Background="#2D2D44" CornerRadius="8" Padding="15" Margin="0,0,0,10">
+                            <Grid>
+                                <TextBlock Text="TOPLAM" 
+                                           FontSize="16" 
+                                           Foreground="#888"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding ToplamTutar, StringFormat='₺{0:N2}'}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="#FF6B35"
+                                           HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Aksiyon Butonları -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button Grid.Column="0" 
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Background="#3D3D5C"
+                                    Content="◀ Geri"
+                                    Command="{Binding GoBackCommand}"
+                                    Padding="15,15"
+                                    Margin="0,0,5,0"/>
+                            
+                            <Button Grid.Column="1" 
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Content="Hesap İste"
+                                    Command="{Binding HesapIsteCommand}"
+                                    Margin="0,0,5,0"/>
+                            
+                            <Button Grid.Column="2" 
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Background="#4CAF50"
+                                    Content="💳 Ödeme"
+                                    Command="{Binding OpenOdemePopupCommand}"
+                                    Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Sipariş Listesi -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="10,10,10,0">
+                    <ItemsControl ItemsSource="{Binding Kalemler}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#2D2D44" CornerRadius="8" Margin="0,0,0,8" Padding="12">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Ürün Bilgisi -->
+                                        <StackPanel Grid.Row="0" Grid.Column="0">
+                                            <TextBlock Text="{Binding UrunAd}"
+                                                       FontSize="14"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="White"/>
+                                            <TextBlock Text="{Binding BirimFiyatText}"
+                                                       FontSize="12"
+                                                       Foreground="#888"
+                                                       Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        
+                                        <!-- Toplam Fiyat -->
+                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                   Text="{Binding ToplamText}"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="#FF6B35"
+                                                   VerticalAlignment="Center"/>
+                                        
+                                        <!-- Kontroller -->
+                                        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <!-- Adet Kontrol -->
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                                <Button Style="{StaticResource MiniButtonStyle}"
+                                                        Content="-"
+                                                        Command="{Binding DataContext.DecreaseAdetCommand, 
+                                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"/>
+                                                <TextBlock Text="{Binding Adet}"
+                                                           Width="40"
+                                                           FontSize="18"
+                                                           FontWeight="Bold"
+                                                           Foreground="White"
+                                                           TextAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                                <Button Style="{StaticResource MiniButtonStyle}"
+                                                        Content="+"
+                                                        Command="{Binding DataContext.IncreaseAdetCommand, 
+                                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                            
+                                            <!-- Not Göstergesi -->
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="{Binding Notlar}"
+                                                       FontSize="11"
+                                                       Foreground="#FFD700"
+                                                       FontStyle="Italic"
+                                                       VerticalAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       Margin="10,0"
+                                                       Visibility="{Binding HasNot, Converter={StaticResource BoolToVis}}"/>
+                                            
+                                            <!-- Not, Fiyat ve Sil Butonları -->
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                <Button Style="{StaticResource MiniButtonStyle}"
+                                                        Content="💰"
+                                                        FontSize="14"
+                                                        Background="#f9e2af"
+                                                        ToolTip="Fiyat Değiştir"
+                                                        Command="{Binding DataContext.OpenFiyatPopupCommand, 
+                                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"
+                                                        Margin="0,0,5,0"/>
+                                                <Button Style="{StaticResource MiniButtonStyle}"
+                                                        Content="📝"
+                                                        FontSize="14"
+                                                        ToolTip="Not Ekle"
+                                                        Command="{Binding DataContext.OpenNotPopupCommand, 
+                                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"
+                                                        Margin="0,0,5,0"/>
+                                                <Button Style="{StaticResource MiniButtonStyle}"
+                                                        Content="🗑"
+                                                        FontSize="14"
+                                                        Background="#E53935"
+                                                        ToolTip="Sil"
+                                                        Command="{Binding DataContext.RemoveKalemCommand, 
+                                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+        
+        <!-- Not Popup -->
+        <Border Grid.ColumnSpan="3"
+                Background="#80000000"
+                Visibility="{Binding IsNotPopupOpen, Converter={StaticResource BoolToVis}}">
+            <Border Background="#1A1A2E"
+                    CornerRadius="15"
+                    Width="450"
+                    Padding="25"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Ürün Notu Ekle"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,5"/>
+                    
+                    <TextBlock Text="{Binding SelectedKalem.UrunAd}"
+                               FontSize="14"
+                               Foreground="#FF6B35"
+                               Margin="0,0,0,20"/>
+                    
+                    <!-- Hazır Notlar -->
+                    <TextBlock Text="Hazır Notlar"
+                               FontSize="12"
+                               Foreground="#888"
+                               Margin="0,0,0,8"/>
+                    
+                    <ItemsControl ItemsSource="{Binding UrunNotlari}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource HazirNotButtonStyle}"
+                                        Content="{Binding Ad}"
+                                        Command="{Binding DataContext.AddHazirNotCommand, 
+                                                 RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                    <!-- Not Textbox -->
+                    <TextBox Text="{Binding KalemNotu, UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="14"
+                             Padding="12"
+                             Background="#2D2D44"
+                             Foreground="White"
+                             BorderThickness="0"
+                             Margin="0,15,0,0">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    
+                    <!-- Butonlar -->
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button Grid.Column="0"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Background="#3D3D5C"
+                                Content="İptal"
+                                Command="{Binding CloseNotPopupCommand}"
+                                Margin="0,0,5,0"/>
+                        
+                        <Button Grid.Column="1"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Content="Kaydet"
+                                Command="{Binding SaveKalemNotCommand}"
+                                Margin="5,0,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+        
+        <!-- Fiyat Düzenleme Popup -->
+        <Border Grid.ColumnSpan="3"
+                Background="#CC000000"
+                Visibility="{Binding IsFiyatPopupOpen, Converter={StaticResource BoolToVis}}">
+            <Border Background="#1A1A2E" CornerRadius="16" Padding="30"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    MinWidth="350">
+                <StackPanel>
+                    <TextBlock Text="💰 Fiyat Değiştir" FontSize="20" FontWeight="Bold" 
+                               Foreground="#cdd6f4" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                    
+                    <TextBlock Text="{Binding FiyatDuzenlenenKalem.UrunAd}" FontSize="16" 
+                               Foreground="#89b4fa" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                    
+                    <TextBlock FontSize="12" Foreground="#6c7086" HorizontalAlignment="Center" Margin="0,0,0,20">
+                        <Run Text="Mevcut: "/>
+                        <Run Text="{Binding FiyatDuzenlenenKalem.Kalem.BirimFiyat, StringFormat={}{0:N2}₺}"/>
+                        <Run Text=" (sadece bu kalem etkilenir)"/>
+                    </TextBlock>
+                    
+                    <TextBlock Text="Yeni Fiyat (₺)" FontSize="14" Foreground="#a6adc8" Margin="0,0,0,8"/>
+                    
+                    <TextBox Text="{Binding YeniFiyat, UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="#a6e3a1"
+                             Background="#313244"
+                             BorderBrush="#45475a"
+                             BorderThickness="2"
+                             Padding="15,10"
+                             HorizontalContentAlignment="Center"/>
+                    
+                    <!-- Hızlı fiyat ayarlama butonları -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <Button Content="-10" Style="{StaticResource MiniButtonStyle}" 
+                                Background="#f38ba8" Width="50" Margin="3"
+                                Command="{Binding AdjustFiyatCommand}" CommandParameter="-10"/>
+                        <Button Content="-5" Style="{StaticResource MiniButtonStyle}" 
+                                Background="#f38ba8" Width="50" Margin="3"
+                                Command="{Binding AdjustFiyatCommand}" CommandParameter="-5"/>
+                        <Button Content="+5" Style="{StaticResource MiniButtonStyle}" 
+                                Background="#a6e3a1" Width="50" Margin="3"
+                                Command="{Binding AdjustFiyatCommand}" CommandParameter="+5"/>
+                        <Button Content="+10" Style="{StaticResource MiniButtonStyle}" 
+                                Background="#a6e3a1" Width="50" Margin="3"
+                                Command="{Binding AdjustFiyatCommand}" CommandParameter="+10"/>
+                    </StackPanel>
+                    
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button Grid.Column="0"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Background="#3D3D5C"
+                                Content="İptal"
+                                Command="{Binding CloseFiyatPopupCommand}"
+                                Margin="0,0,5,0"/>
+                        
+                        <Button Grid.Column="1"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Content="✓ Uygula"
+                                Command="{Binding SaveKalemFiyatCommand}"
+                                Margin="5,0,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+        
+        <!-- Yarım/Tam Porsiyon Seçim Popup -->
+        <Border Grid.ColumnSpan="3"
+                Background="#CC000000"
+                Visibility="{Binding IsPorsiyonPopupOpen, Converter={StaticResource BoolToVis}}">
+            <Border Background="#1A1A2E" CornerRadius="16" Padding="30"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    MinWidth="400">
+                <StackPanel>
+                    <TextBlock Text="🍽️ Porsiyon Seçimi" FontSize="20" FontWeight="Bold" 
+                               Foreground="#cdd6f4" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                    
+                    <TextBlock Text="{Binding PendingUrun.Urun.Ad}" FontSize="18" 
+                               Foreground="#89b4fa" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Tam Porsiyon -->
+                        <Button Grid.Column="0" Margin="5"
+                                Command="{Binding SelectTamPorsiyonCommand}"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border Background="#45475a" CornerRadius="12" Padding="20">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#a6e3a1"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="🍛" FontSize="40" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="TAM PORSİYON" FontSize="14" FontWeight="Bold" 
+                                                       Foreground="#cdd6f4" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                                            <TextBlock Text="{Binding PendingUrun.Urun.Fiyat, StringFormat=₺{0:N2}}" 
+                                                       FontSize="18" FontWeight="Bold" Foreground="#a6e3a1" 
+                                                       HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        
+                        <!-- Yarım Porsiyon -->
+                        <Button Grid.Column="1" Margin="5"
+                                Command="{Binding SelectYarimPorsiyonCommand}"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border Background="#45475a" CornerRadius="12" Padding="20">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#f9e2af"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="🥣" FontSize="40" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="YARIM PORSİYON" FontSize="14" FontWeight="Bold" 
+                                                       Foreground="#cdd6f4" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                                            <TextBlock Text="{Binding PendingUrun.Urun.YarimPorsiyonFiyat, StringFormat=₺{0:N2}}" 
+                                                       FontSize="18" FontWeight="Bold" Foreground="#f9e2af" 
+                                                       HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                    
+                    <Button Content="İptal" 
+                            Command="{Binding ClosePorsiyonPopupCommand}"
+                            Background="#6c7086" Foreground="#cdd6f4"
+                            Padding="20,10" Margin="0,20,0,0"
+                            BorderThickness="0" Cursor="Hand"
+                            HorizontalAlignment="Center">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Border>
+        
+        <!-- Ödeme Popup -->
+        <Border Grid.ColumnSpan="3"
+                Background="#CC000000"
+                Visibility="{Binding IsOdemePopupOpen, Converter={StaticResource BoolToVis}}">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border Background="#1A1A2E" CornerRadius="20" Padding="0">
+                    <Grid Width="900" Height="650">
+                        <!-- Close Button -->
+                        <Button Content="✕" FontSize="18" FontWeight="Bold"
+                                Background="Transparent" Foreground="#888"
+                                BorderThickness="0" Cursor="Hand"
+                                HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Margin="0,15,20,0" Padding="10,5" Panel.ZIndex="100"
+                                Command="{Binding CloseOdemePopupCommand}"/>
+                        
+                        <!-- Ödeme İçerik -->
+                        <local:OdemePopup DataContext="{Binding OdemeViewModel}" Margin="20"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

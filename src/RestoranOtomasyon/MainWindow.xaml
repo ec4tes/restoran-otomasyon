@@ -1,0 +1,307 @@
+﻿<Window x:Class="RestoranOtomasyon.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:RestoranOtomasyon.ViewModels"
+        mc:Ignorable="d"
+        Title="{Binding Title}"
+        Height="768" Width="1366"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
+        Background="#1a1a2e">
+
+    <Window.Resources>
+        <!-- Bool to Visibility Converters -->
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        
+        <!-- Inverse Bool to Visibility -->
+        <BooleanToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+        
+        <!-- Renk Tanımları -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#16213e"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#0f3460"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#e94560"/>
+        <SolidColorBrush x:Key="SuccessColor" Color="#27ae60"/>
+        <SolidColorBrush x:Key="WarningColor" Color="#f39c12"/>
+        <SolidColorBrush x:Key="TextColor" Color="#ffffff"/>
+        <SolidColorBrush x:Key="TextMutedColor" Color="#a0a0a0"/>
+        
+        <!-- Buton Stili -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#ff6b6b"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#c0392b"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- PIN Tuş Stili -->
+        <Style x:Key="PinButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1a4a7a"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0a3a6a"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Ana Grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource PrimaryColor}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo/Başlık -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock Text="🍽️" FontSize="28" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding Title}" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="White" 
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Kullanıcı Bilgisi -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0"
+                            Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="👤" FontSize="18" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding CurrentUser.Ad}" 
+                               FontSize="16" 
+                               Foreground="White" 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text=" (" FontSize="14" Foreground="{StaticResource TextMutedColor}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding CurrentUser.Rol}" 
+                               FontSize="14" 
+                               Foreground="{StaticResource TextMutedColor}" 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text=")" FontSize="14" Foreground="{StaticResource TextMutedColor}" VerticalAlignment="Center"/>
+                    
+                    <!-- Yönetim Paneli Butonu (Admin için) -->
+                    <Button Content="⚙️ Yönetim" 
+                            Command="{Binding OpenYonetimCommand}"
+                            Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Background="#6366f1"
+                            Foreground="White"
+                            Margin="15,0,0,0"
+                            Padding="15,8"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    
+                    <Button Content="🚪 Çıkış" 
+                            Command="{Binding LogoutCommand}"
+                            Style="{StaticResource PrimaryButton}"
+                            Margin="10,0,0,0"
+                            Padding="15,8"
+                            FontSize="14"/>
+                </StackPanel>
+
+                <!-- Saat -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock Text="🔒" FontSize="18" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding CurrentTime}" 
+                               FontSize="20" 
+                               FontWeight="Bold"
+                               Foreground="White" 
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Ana İçerik -->
+        <Grid Grid.Row="1">
+            <!-- Login Ekranı -->
+            <Grid x:Name="LoginPanel">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1a1a2e" Offset="0"/>
+                        <GradientStop Color="#16213e" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <!-- Logo -->
+                    <TextBlock Text="🍽️" FontSize="80" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    <TextBlock Text="Restoran Otomasyonu" 
+                               FontSize="32" 
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="PIN kodunuzu girin" 
+                               FontSize="16" 
+                               Foreground="{StaticResource TextMutedColor}"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,30"/>
+
+                    <!-- PIN Display -->
+                    <Border Background="{StaticResource SecondaryColor}" 
+                            CornerRadius="10" 
+                            Padding="20,15"
+                            Margin="0,0,0,20"
+                            MinWidth="280">
+                        <TextBlock x:Name="PinDisplay"
+                                   Text="" 
+                                   FontSize="36" 
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   FontFamily="Consolas"/>
+                    </Border>
+
+                    <!-- PIN Pad -->
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Row="0" Grid.Column="0" Content="1" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="0" Grid.Column="1" Content="2" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="0" Grid.Column="2" Content="3" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        
+                        <Button Grid.Row="1" Grid.Column="0" Content="4" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="1" Grid.Column="1" Content="5" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="1" Grid.Column="2" Content="6" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        
+                        <Button Grid.Row="2" Grid.Column="0" Content="7" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="2" Grid.Column="1" Content="8" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="2" Grid.Column="2" Content="9" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        
+                        <Button Grid.Row="3" Grid.Column="0" Content="C" Style="{StaticResource PinButton}" Click="ClearPin_Click"
+                                Background="#c0392b"/>
+                        <Button Grid.Row="3" Grid.Column="1" Content="0" Style="{StaticResource PinButton}" Click="PinButton_Click"/>
+                        <Button Grid.Row="3" Grid.Column="2" Content="✓" Style="{StaticResource PinButton}" Click="SubmitPin_Click"
+                                Background="{StaticResource SuccessColor}"/>
+                    </Grid>
+
+                    <!-- Tarih -->
+                    <TextBlock Text="{Binding CurrentDate}" 
+                               FontSize="14" 
+                               Foreground="{StaticResource TextMutedColor}"
+                               HorizontalAlignment="Center"
+                               Margin="0,30,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Ana Uygulama (Login sonrası) -->
+            <Grid x:Name="MainPanel" Visibility="Collapsed">
+                <Grid.Background>
+                    <SolidColorBrush Color="#1a1a2e"/>
+                </Grid.Background>
+
+                <!-- ContentControl for Navigation -->
+                <ContentControl x:Name="MainContent"/>
+            </Grid>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="{StaticResource PrimaryColor}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{Binding StatusMessage}" 
+                           Foreground="{StaticResource TextMutedColor}"
+                           VerticalAlignment="Center"
+                           Margin="20,0"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="v1.0 MVP - Sprint 2" 
+                           Foreground="{StaticResource TextMutedColor}"
+                           VerticalAlignment="Center"
+                           Margin="20,0"/>
+            </Grid>
+        </Border>
+
+        <!-- Busy Overlay -->
+        <Grid x:Name="BusyOverlay" Visibility="Collapsed" Background="#80000000">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ProgressBar IsIndeterminate="True" 
+                             Width="200" 
+                             Height="4"
+                             Foreground="{StaticResource AccentColor}"/>
+                <TextBlock Text="Lütfen bekleyin..." 
+                           Foreground="White"
+                           FontSize="16"
+                           Margin="0,20,0,0"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

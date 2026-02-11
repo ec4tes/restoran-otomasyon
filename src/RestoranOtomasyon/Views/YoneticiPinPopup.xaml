@@ -1,0 +1,108 @@
+<UserControl x:Class="RestoranOtomasyon.Views.YoneticiPinPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="350">
+    
+    <UserControl.Resources>
+        <!-- PIN Button Style -->
+        <Style x:Key="PinButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2D2D44"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="65"/>
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3D3D5C"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF6B35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="#1A1A2E" CornerRadius="15" Padding="25">
+        <StackPanel>
+            <!-- Başlık -->
+            <TextBlock Text="🔐 Yönetici Onayı" FontSize="22" FontWeight="Bold" Foreground="White" 
+                       HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Yönetici PIN kodunu girin" FontSize="14" Foreground="#888" 
+                       HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            
+            <!-- PIN Display -->
+            <Border Background="#2D2D44" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                <TextBlock Text="{Binding PinDisplay}" FontSize="32" FontWeight="Bold" 
+                           Foreground="White" HorizontalAlignment="Center" FontFamily="Consolas"/>
+            </Border>
+            
+            <!-- Error Message -->
+            <TextBlock Text="{Binding PinErrorMessage}" FontSize="12" Foreground="#E74C3C" 
+                       HorizontalAlignment="Center" Margin="0,0,0,15"/>
+            
+            <!-- Numpad -->
+            <Grid HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Content="1" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="1"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="2" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="2"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="3" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="3"/>
+                
+                <Button Grid.Row="1" Grid.Column="0" Content="4" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="4"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="5" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="5"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="6" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="6"/>
+                
+                <Button Grid.Row="2" Grid.Column="0" Content="7" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="7"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="8" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="8"/>
+                <Button Grid.Row="2" Grid.Column="2" Content="9" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="9"/>
+                
+                <Button Grid.Row="3" Grid.Column="0" Content="C" Style="{StaticResource PinButtonStyle}" 
+                        Background="#E74C3C" Command="{Binding ClearPinCommand}"/>
+                <Button Grid.Row="3" Grid.Column="1" Content="0" Style="{StaticResource PinButtonStyle}" 
+                        Command="{Binding AddPinDigitCommand}" CommandParameter="0"/>
+                <Button Grid.Row="3" Grid.Column="2" Content="✓" Style="{StaticResource PinButtonStyle}" 
+                        Background="#27AE60" Command="{Binding VerifyPinCommand}"/>
+            </Grid>
+            
+            <!-- İptal Butonu -->
+            <Button Content="İptal" FontSize="14" Foreground="#888" Background="Transparent" 
+                    BorderThickness="0" Cursor="Hand" Margin="0,15,0,0"
+                    Command="{Binding ClosePinPopupCommand}"/>
+        </StackPanel>
+    </Border>
+</UserControl>
